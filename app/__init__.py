@@ -27,6 +27,20 @@ app = Flask(__name__)
 def show_welcome():
     return render_template("pages/welcome.jinja")
 
+#-----------------------------------------------------------
+# New Creature Form
+#-----------------------------------------------------------
+@app.get("/creature/new")
+def show_creature_form():
+    return render_template("pages/creature_form.jinja")
+
+#-----------------------------------------------------------
+# Handle the Creature Form Data
+#-----------------------------------------------------------
+@app.post("/creature/new")
+def process_creature_form():
+    print(request.form)
+
 
 #-----------------------------------------------------------
 # Creature list page - Show all the creatures
