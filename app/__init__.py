@@ -39,8 +39,25 @@ def show_creature_form():
 #-----------------------------------------------------------
 @app.post("/creature/new")
 def process_creature_form():
-    print(request.form)
+    # Get the form data
+    species = request.form.get("species", "unknown").strip()
+    name = request.form.get("name", "unknown").strip()
 
+    # Connect to the DB
+    with connect_db() as db:
+        sql = """
+             INSERT INTO creatures (species, name)
+             VALUES (?, ?)
+        """
+        params = (species, name)
+
+        # Run the query
+        db.execute(sql, params)
+
+
+        flash (f"Creature {name} added successfully")
+
+        return redirect("/creatures")
 
 #-----------------------------------------------------------
 # Creature list page - Show all the creatures
